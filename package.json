@@ -5,7 +5,7 @@
 	"author": "Creative Tim",
 	"license": "See license in https://www.creative-tim.com/license",
 	"description": "Material UI version of Vision UI Dashboard by Creative Tim",
-	"homepage": "https://demos.creative-tim.com/vision-ui-dashboard-react/#/dashboard",
+	"homepage": "/",
 	"bugs": {
 		"url": "https://github.com/creativetimofficial/vision-ui-dashboard-react/issues"
 	},
@@ -24,6 +24,7 @@
 		"@mui/styles": "^5.2.0",
 		"@mui/x-data-grid": "^7.7.0",
 		"apexcharts": "^3.30.0",
+		"axios": "^1.7.9",
 		"chroma-js": "2.1.2",
 		"install": "^0.13.0",
 		"papaparse": "^5.4.1",

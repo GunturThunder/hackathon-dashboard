@@ -59,21 +59,72 @@ import { lineChartDataDashboard, lineChartDataDashboardAxis, lineChartDataDashbo
 import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
 import { barChartDataDashboard } from "layouts/dashboard/data/barChartData";
 import { barChartOptionsDashboard } from "layouts/dashboard/data/barChartOptions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Dashboard() {
   const { gradients } = colors;
   const { cardContent } = gradients;
-  useEffect(()=>{
+  const [revenueA, setRevenueA] = useState(0)
+  const [revenueB, setRevenueB] = useState(0)
+  const [totRevanue, setTotRevenue] = useState(0)
+  const [usera, setUsera] = useState({})
+  const [userb, setUserb] = useState({})
+  useEffect(() => {
     axios({
       method: 'get',
-      url: 'https://jsonplaceholder.typicode.com/todos/1',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      url: 'http://3.88.228.137:80/app_a/products',
     })
       .then(function (response) {
-        console.log('response gun', response)
+        response.data.map((item, index)=>{
+          let price = item.price
+          setRevenueA(revenueA+parseInt(price))
+        })
+        // setRevenueA(response.data)
       });
-  },[])
+    axios({
+      method: 'get',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      url: 'http://3.88.228.137:80/app_a/users',
+    })
+      .then(function (response) {
+        setUsera(response.data)
+      });
+      //
+
+      axios({
+        method: 'get',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+        url: 'http://3.88.228.137:80/app_b/products',
+      })
+        .then(function (response) {
+          response.data.map((item, index)=>{
+            let price = item.price
+            setRevenueB(revenueB+parseInt(price))
+          })
+        });
+      axios({
+        method: 'get',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+        url: 'http://3.88.228.137:80/app_b/users',
+      })
+        .then(function (response) {
+          setUserb(response.data)
+        });
+  }, [])
+
+  useEffect(()=>{
+    setTotRevenue(revenueB+revenueA)
+  })
 
   return (
     <DashboardLayout>
@@ -83,27 +134,27 @@ function Dashboard() {
       <VuiBox py={3}>
         <VuiBox mb={3}>
           <Grid container spacing={3}>
-          <Grid item xs={12} md={6} xl={4}>
+            <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Total Revenue", fontWeight: "regular" }}
-                count="Rp. 5.000.000.000"
-                percentage={{ color: "success", text: "+55%" }}
+                count={'$'+totRevanue+'.00'}
+                // percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Touch Point Axis", fontWeight: "regular" }}
-                count="Rp. 2.000.000.000"
-                percentage={{ color: "success", text: "+55%" }}
+                count={'$'+revenueA+'.00'}
+                // percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Touch Point XL" }}
-                count="3.000.000.000"
-                percentage={{ color: "success", text: "+3%" }}
+                count={'$'+revenueB+'.00'}
+                // percentage={{ color: "success", text: "+3%" }}
                 icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
               />
             </Grid>
@@ -111,27 +162,27 @@ function Dashboard() {
         </VuiBox>
         <VuiBox mb={3}>
           <Grid container spacing={3}>
-          <Grid item xs={12} md={6} xl={4}>
+            <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Total Customer", fontWeight: "regular" }}
-                count="1.000.000"
-                percentage={{ color: "success", text: "+55%" }}
+                count={usera ? usera.length+userb.length:0}
+                // percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Touch Point Axis", fontWeight: "regular" }}
-                count="500.000"
-                percentage={{ color: "success", text: "+55%" }}
+                count={usera ?usera.length:0}
+                // percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Touch Point XL" }}
-                count="500.000"
-                percentage={{ color: "success", text: "+3%" }}
+                count={userb ? userb.length:0}
+                // percentage={{ color: "success", text: "+3%" }}
                 icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
               />
             </Grid>

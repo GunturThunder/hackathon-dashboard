@@ -137,7 +137,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Total Revenue", fontWeight: "regular" }}
-                count={'$'+totRevanue+'.00'}
+                count={'IDR'+totRevanue+'.00'}
                 // percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
               />
@@ -145,7 +145,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Touch Point Axis", fontWeight: "regular" }}
-                count={'$'+revenueA+'.00'}
+                count={'IDR'+revenueA+'.00'}
                 // percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
               />
@@ -153,7 +153,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Touch Point XL" }}
-                count={'$'+revenueB+'.00'}
+                count={'IDR'+revenueB+'.00'}
                 // percentage={{ color: "success", text: "+3%" }}
                 icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
               />

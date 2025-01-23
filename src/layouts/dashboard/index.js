@@ -76,14 +76,13 @@ function Dashboard() {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      url: 'http://3.88.228.137:80/app_a/products',
+      url: 'http://3.88.228.137:80/app_a/transactions',
     })
       .then(function (response) {
-        response.data.map((item, index)=>{
-          let price = item.price
-          setRevenueA(revenueA+parseInt(price))
-        })
-        // setRevenueA(response.data)
+        const totalRevenue = response.data.reduce((sum, item) => {
+          return sum + parseFloat(item.total_price); // Convert total_price to a float and add to the sum
+        }, 0);
+        setRevenueA(totalRevenue)
       });
     axios({
       method: 'get',
@@ -102,13 +101,13 @@ function Dashboard() {
         headers: {
           'Access-Control-Allow-Origin': '*',
         },
-        url: 'http://3.88.228.137:80/app_b/products',
+        url: 'http://3.88.228.137:80/app_b/transactions',
       })
         .then(function (response) {
-          response.data.map((item, index)=>{
-            let price = item.price
-            setRevenueB(revenueB+parseInt(price))
-          })
+          const totalRevenue = response.data.reduce((sum, item) => {
+            return sum + parseFloat(item.total_price); // Convert total_price to a float and add to the sum
+          }, 0);
+          setRevenueB(totalRevenue)
         });
       axios({
         method: 'get',
